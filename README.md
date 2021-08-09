@@ -1,4 +1,4 @@
-# Montecinema_PK
+# MonteCinema
 
 Implementaiton of Rubycamp project - Monte Cinema. 
 
