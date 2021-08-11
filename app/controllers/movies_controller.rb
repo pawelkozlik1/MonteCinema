@@ -14,7 +14,7 @@ class MoviesController < ApplicationController
     render json: @transformed_movie
   end
 
-  def new
+  def create
     Movie.create(movie_params)
   end
 
