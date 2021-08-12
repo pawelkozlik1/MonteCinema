@@ -12,30 +12,30 @@ class MoviesController < ApplicationController
   end
 
   def create
-    Movie.create(serialize_movie)
+    Movie.create(movie_params)
   end
 
   def update
     movie = Movie.find(params[:id])
-    movie.update(serialize_movie)
-    render json: { succes: 'Update successful' }
+    if movie.update(movie_params)
+      render json: { succes: 'Update successful' }
+    else
+      render json: errors
+    end
   end
 
   def delete
     movie = Movie.find(params[:id])
-    movie.destroy
-    render json: { succes: 'Delete successful' }
+    if movie.destroy
+      render json: { succes: 'Delete successful' }
+    else
+      render json: errors
+    end
   end
 
   private
 
-  def serialize_movie(movie)
-    {
-      id: movie.id,
-      title: movie.title,
-      length: movie.length,
-      director: movie.director,
-      genre: movie.genre
-    }
+  def movie_params
+    params.permit(:id, :title, :length, :director, :genre)
   end
 end
