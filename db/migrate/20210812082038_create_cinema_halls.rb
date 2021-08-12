@@ -3,9 +3,9 @@
 class CreateCinemaHalls < ActiveRecord::Migration[6.1]
   def change
     create_table :cinema_halls do |t|
-      t.integer :name
-      t.integer :size
-      t.integer :collumn_num
+      t.integer :name, null: false
+      t.integer :size, null: false
+      t.integer :column_num
       t.integer :row_num
 
       t.timestamps
