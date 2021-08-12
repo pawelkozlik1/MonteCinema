@@ -23,7 +23,7 @@ class MoviesController < ApplicationController
   def update
     movie = Movie.find(params[:id])
     if movie.update(movie_params)
-      render json: { succes: 'Update successful' }
+      render json: { success: 'Update successful' }
     else
       render json: movie.errors
     end
@@ -32,7 +32,7 @@ class MoviesController < ApplicationController
   def delete
     movie = Movie.find(params[:id])
     if movie.destroy
-      render json: { succes: 'Delete successful' }
+      render json: { success: 'Delete successful' }
     else
       render json: movie.errors
     end
