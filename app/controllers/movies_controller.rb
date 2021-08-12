@@ -12,7 +12,12 @@ class MoviesController < ApplicationController
   end
 
   def create
-    Movie.create(movie_params)
+    movie = Movie.new(movie_params)
+    if movie.save
+      render json: movie, status: :created
+    else
+      render json: movie.errors, status: :bad_request
+    end
   end
 
   def update
@@ -20,7 +25,7 @@ class MoviesController < ApplicationController
     if movie.update(movie_params)
       render json: { succes: 'Update successful' }
     else
-      render json: errors
+      render json: movie.errors
     end
   end
 
@@ -29,13 +34,13 @@ class MoviesController < ApplicationController
     if movie.destroy
       render json: { succes: 'Delete successful' }
     else
-      render json: errors
+      render json: movie.errors
     end
   end
 
   private
 
   def movie_params
-    params.permit(:id, :title, :length, :director, :genre)
+    params.permit(:title, :length, :director, :genre)
   end
 end
