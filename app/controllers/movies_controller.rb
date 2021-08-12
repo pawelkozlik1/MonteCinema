@@ -2,35 +2,34 @@
 
 class MoviesController < ApplicationController
   def index
-    @movies = Movie.all.map do |movie|
-      movie_params(movie)
-    end
+    @movies = Movie.all
     render json: @movies
   end
 
   def show
     movie = Movie.find(params[:id])
-    @transformed_movie = movie_params(movie)
-    render json: @transformed_movie
+    render json: movie
   end
 
   def create
-    Movie.create(movie_params)
+    Movie.create(serialize_movie)
   end
 
   def update
     movie = Movie.find(params[:id])
-    movie.update(movie_params)
+    movie.update(serialize_movie)
+    render json: { succes: 'Update successful' }
   end
 
   def delete
     movie = Movie.find(params[:id])
     movie.destroy
+    render json: { succes: 'Delete successful' }
   end
 
   private
 
-  def movie_params(movie)
+  def serialize_movie(movie)
     {
       id: movie.id,
       title: movie.title,
