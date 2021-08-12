@@ -15,9 +15,7 @@ class CinemaHallsController < ApplicationController
     @cinema_hall = CinemaHall.new(cinema_hall_params)
     if [20, 50, 100, 200].include? @cinema_hall.size
       cinema_hall_rows_columns
-      if @cinema_hall.save
-        render json: @cinema_hall, status: :created
-      end
+      render json: @cinema_hall, status: :created if @cinema_hall.save
     else
       render json: { error: 'Wrong size' }
     end
