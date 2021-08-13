@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class CinemaHall < ApplicationRecord
+  has_many :screenings, dependent: :destroy
   before_save :assign_cinema_hall_column_and_rows
 
   private
