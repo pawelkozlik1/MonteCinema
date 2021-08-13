@@ -2,8 +2,8 @@
 
 class CinemaHallsController < ApplicationController
   def index
-    @cinema_halls = CinemaHall.all
-    render json: @cinema_halls
+    cinema_halls = CinemaHall.all
+    render json: cinema_halls
   end
 
   def show
