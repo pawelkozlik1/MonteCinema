@@ -43,5 +43,4 @@ class ScreeningsController < ApplicationController
   def screening_params
     params.permit(:movie, :cinema_hall, :screen_time)
   end
-
 end
