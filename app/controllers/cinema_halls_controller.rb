@@ -14,7 +14,6 @@ class CinemaHallsController < ApplicationController
   def create
     cinema_hall = CinemaHall.new(cinema_hall_params)
     if [20, 50, 100, 200].include? cinema_hall.size
-      before_save(cinema_hall)
       render json: cinema_hall, status: :created if cinema_hall.save
     else
       render json: { error: 'Wrong size' }
@@ -24,7 +23,6 @@ class CinemaHallsController < ApplicationController
   def edit
     cinema_hall = CinemaHall.find(params[:id])
     if cinema_hall.update(cinema_hall_params)
-      before_save(cinema_hall)
       render json: cinema_hall, status: :created if cinema_hall.save
     else
       render json: @cinema_hall.errors
