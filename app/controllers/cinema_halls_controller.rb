@@ -16,19 +16,19 @@ class CinemaHallsController < ApplicationController
     if [20, 50, 100, 200].include? cinema_hall.size
       if cinema_hall.save
         render json: cinema_hall, status: :created
-        CinemaHallsService.new(self).assign_seat_names
+        CinemaHallsService.new(cinema_hall).assign_seat_names
       end
     else
       render json: { error: 'Wrong size' }
     end
   end
 
-  def edit
+  def update
     cinema_hall = CinemaHall.find(params[:id])
     if cinema_hall.update(cinema_hall_params)
       if cinema_hall.save
         render json: cinema_hall, status: :created
-        CinemaHallsService.new(self).assign_seat_names
+        CinemaHallsService.new(cinema_hall).assign_seat_names
       end
     else
       render json: @cinema_hall.errors
