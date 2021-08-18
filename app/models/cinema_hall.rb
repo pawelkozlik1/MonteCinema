@@ -8,24 +8,6 @@ class CinemaHall < ApplicationRecord
 
   private
 
-  def assign_seat_names
-    create_seats_array
-    @seats_a.each do |name|
-      cinema_hall.seats.create(name: name)
-    end
-  end
-
-  def create_seats_array
-    rows_name = ('a'..'z').take(row_num).to_a
-    columns_name = (1..(column_num)).to_a
-    @seats_a = []
-    rows_name.each do |i|
-      columns_name.each do |j|
-        @seats_a.append(i + j.to_s)
-      end
-    end
-  end
-
   def assign_cinema_hall_column_and_rows
     case size
     when 20 then assign_column_and_rows(4, 5)
