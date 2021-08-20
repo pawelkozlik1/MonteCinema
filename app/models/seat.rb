@@ -2,4 +2,5 @@
 
 class Seat < ApplicationRecord
   belongs_to :cinema_hall
+  has_many :tickets
 end
