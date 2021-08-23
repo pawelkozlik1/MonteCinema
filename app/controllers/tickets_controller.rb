@@ -30,7 +30,7 @@ class TicketsController < ApplicationController
   def update
     ticket = Ticket.find(params[:id])
     if seat_for_screening_is_taken?
-      if ticket.screening_id == params[:screening_id].to_i && ticket.seat_id == params[:seat_id].to_i
+      if ticket.screening_id == ticket_params[:screening_id].to_i && ticket.seat_id == ticket_params[:seat_id].to_i
         if ticket.update(ticket_params)
           render json: { success: 'Update successful' }
         else
