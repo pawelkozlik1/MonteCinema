@@ -12,23 +12,32 @@ class TicketsController < ApplicationController
   end
 
   def create
-    ticket = Ticket.new(ticket_params)
-    if Ticket.where.not(Ticket.screening.id = ticket.screening.id, Ticket.seat.name = ticket.seat.name)
+    if seat_for_screening_is_taken?
+      render json: { error: 'Ticket taken' }
+    else
+      ticket = Ticket.new(ticket_params)
       if ticket.save
         render json: ticket, status: :created
       else
-        render json: ticket.erros, status: :bad_request
+        render json: ticket.errors, status: :bad_request
       end
     end
   end
 
+  # I did this so that the seat_for_screening_is_taken doesnt throw error when you try to edit ticket type or price with
+  # existing screening and seat id
+  # If there is a clearer way to write this feel free to correct me
   def update
     ticket = Ticket.find(params[:id])
-    if Ticket.where.not(Ticket.screening.id = ticket.screening.id, Ticket.seat.name = ticket.seat.name)
-      if ticket.update(ticket_params)
-        render json: { success: 'Update successful' }
+    if seat_for_screening_is_taken?
+      if ticket.screening_id == params[:screening_id].to_i && ticket.seat_id == params[:seat_id].to_i
+        if ticket.update(ticket_params)
+          render json: { success: 'Update successful' }
+        else
+          render json: ticket.errors
+        end
       else
-        render json: ticket.errors
+        render json: { error: 'Ticket taken' }
       end
     end
   end
@@ -45,6 +54,10 @@ class TicketsController < ApplicationController
   private
 
   def ticket_params
-    params.permit(:type, :price)
+    params.permit(:ticket_type, :price, :screening_id, :seat_id)
+  end
+
+  def seat_for_screening_is_taken?
+    Ticket.exists?(screening_id: ticket_params[:screening_id], seat_id: ticket_params[:seat_id])
   end
 end
