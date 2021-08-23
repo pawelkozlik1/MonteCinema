@@ -179,13 +179,13 @@ PLATFORMS
 DEPENDENCIES
   bootsnap (>= 1.4.4)
   byebug
-  factory_bot_rails
+  factory_bot_rails (~> 6.2.0)
   listen (~> 3.3)
   pg (~> 1.1)
   puma (~> 5.0)
   rails (~> 6.1.4)
   rspec-rails (~> 5.0.0)
-  simplecov
+  simplecov (~> 0.21.2)
   spring
   tzinfo-data
 
