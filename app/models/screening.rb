@@ -3,5 +3,5 @@
 class Screening < ApplicationRecord
   belongs_to :movie
   belongs_to :cinema_hall
-  has_many :tickets
+  has_many :tickets, dependent: :destroy
 end
