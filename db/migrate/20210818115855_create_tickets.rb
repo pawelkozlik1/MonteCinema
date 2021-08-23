@@ -3,10 +3,10 @@
 class CreateTickets < ActiveRecord::Migration[6.1]
   def change
     create_table :tickets do |t|
-      t.string :type, null: false
+      t.string :ticket_type, null: false
       t.float :price, null: false
-      t.references :screenings, null: false
-      t.references :seats, null: false
+      t.references :screening, null: false
+      t.references :seat, null: false
 
       t.timestamps
     end
