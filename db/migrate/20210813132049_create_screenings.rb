@@ -5,7 +5,7 @@ class CreateScreenings < ActiveRecord::Migration[6.1]
     create_table :screenings do |t|
       t.references :movie, null: false
       t.references :cinema_hall, null: false
-      t.datetime :screen_time, null: false
+      t.timestamp :screen_time, null: false
 
       t.timestamps
     end
