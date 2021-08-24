@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_18_115855) do
+ActiveRecord::Schema.define(version: 2021_08_24_075225) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,14 @@ ActiveRecord::Schema.define(version: 2021_08_18_115855) do
     t.string "genre"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "reservations", force: :cascade do |t|
+    t.string "status", null: false
+    t.bigint "screening_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["screening_id"], name: "index_reservations_on_screening_id"
   end
 
   create_table "screenings", force: :cascade do |t|
@@ -56,8 +64,10 @@ ActiveRecord::Schema.define(version: 2021_08_18_115855) do
     t.float "price", null: false
     t.bigint "screening_id", null: false
     t.bigint "seat_id", null: false
+    t.bigint "reservation_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["reservation_id"], name: "index_tickets_on_reservation_id"
     t.index ["screening_id"], name: "index_tickets_on_screening_id"
     t.index ["seat_id"], name: "index_tickets_on_seat_id"
   end
