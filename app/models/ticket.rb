@@ -3,4 +3,5 @@
 class Ticket < ApplicationRecord
   belongs_to :screening
   belongs_to :seat
+  belongs_to :reservation
 end
