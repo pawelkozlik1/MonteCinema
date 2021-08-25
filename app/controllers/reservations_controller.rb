@@ -14,7 +14,6 @@ class ReservationsController < ApplicationController
   def create
     reservation_db = Reservation.joins(:screening)
     reservation = reservation_db.new(reservation_params)
-    byebug
     if reservation.save
       render json: reservation, status: :created
     else
