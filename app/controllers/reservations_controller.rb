@@ -12,12 +12,15 @@ class ReservationsController < ApplicationController
   end
 
   def create
-    reservation = Reservation.new(reservation_params)
+    reservation_db = Reservation.joins(:screening)
+    reservation = reservation_db.new(reservation_params)
+    byebug
     if reservation.save
       render json: reservation, status: :created
     else
       render json: reservation.errors, status: :bad_request
     end
+    ReservationCancellationJob.set(wait_until: reservation.screening.screen_time - 30.minutes).perform_later(reservation.id)
   end
 
   def update
