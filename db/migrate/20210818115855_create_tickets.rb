@@ -7,6 +7,7 @@ class CreateTickets < ActiveRecord::Migration[6.1]
       t.float :price, null: false
       t.references :screening, null: false
       t.references :seat, null: false
+      t.references :reservation, null: false
 
       t.timestamps
     end

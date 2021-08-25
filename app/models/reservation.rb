@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Seat < ApplicationRecord
-  belongs_to :cinema_hall
+class Reservation < ApplicationRecord
   has_many :tickets, dependent: :destroy
+  belongs_to :screening
 end
