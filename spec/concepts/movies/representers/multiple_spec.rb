@@ -24,7 +24,7 @@ RSpec.describe Movies::Representers::Multiple do
             length: movie_2.length,
             director: movie_2.director,
             genre: movie_2.genre
-          },
+          }
         ]
       )
     end
