@@ -2,40 +2,31 @@
 
 class MoviesController < ApplicationController
   def index
-    movies = Movie.all
-    render json: movies
+    render json: Movies::Representers::Multiple.new.call
   end
 
   def show
-    movie = Movie.find(params[:id])
-    render json: movie
+    render json: Movies::Representers::Single.new(Movies::MovieRepository.new.find_movie(params[:id])).call
   end
 
   def create
-    movie = Movie.new(movie_params)
-    if movie.save
-      render json: movie, status: :created
+    movie = Movies::UseCases::Create.new(params: movie_params).call
+
+    if movie.valid?
+      render json: Movies::Representers::Single.new(movie).call, status: :created
     else
-      render json: movie.errors, status: :bad_request
+      render json: movie.errors
     end
   end
 
   def update
-    movie = Movie.find(params[:id])
-    if movie.update(movie_params)
-      render json: { success: 'Update successful' }
-    else
-      render json: movie.errors
-    end
+    movie = Movies::UseCases::Update.new(params: movie_params, id: params[:id]).call
+    render json: Movies::Representers::Single.new(movie).call
   end
 
   def delete
-    movie = Movie.find(params[:id])
-    if movie.destroy
-      render json: { success: 'Delete successful' }
-    else
-      render json: movie.errors
-    end
+    Movies::UseCases::Delete.new(id: params[:id]).call
+    render head: :no_content
   end
 
   private
