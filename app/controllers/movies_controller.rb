@@ -2,7 +2,7 @@
 
 class MoviesController < ApplicationController
   def index
-    render json: Movies::Representers::Multiple.new.call
+    render json: Movies::Representers::Multiple.new(Movies::MovieRepository.new.all_movies).call
   end
 
   def show
