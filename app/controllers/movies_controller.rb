@@ -24,7 +24,7 @@ class MoviesController < ApplicationController
     render json: Movies::Representers::Single.new(movie).call
   end
 
-  def delete
+  def destroy
     Movies::UseCases::Delete.new(id: params[:id]).call
     render head: :no_content
   end

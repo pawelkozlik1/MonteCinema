@@ -21,15 +21,15 @@ module Movies
     end
 
     def update_movie(id, params)
-      adapter
-        .find(id)
-        .update!(params)
+      movie = adapter.find(id)
+      movie.update(params)
+      movie
     end
 
     def delete_movie(id)
       adapter
         .find(id)
-        .destroy
+        .delete
     end
   end
 end

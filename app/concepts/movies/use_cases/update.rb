@@ -10,9 +10,7 @@ module Movies
       end
 
       def call
-        movie = repository.update_movie(id, params)
-        byebug
-        movie
+        repository.update_movie(id, params)
       end
 
       private
