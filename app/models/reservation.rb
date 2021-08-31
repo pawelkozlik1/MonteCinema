@@ -3,4 +3,5 @@
 class Reservation < ApplicationRecord
   has_many :tickets, dependent: :destroy
   belongs_to :screening
+  belongs_to :user
 end
