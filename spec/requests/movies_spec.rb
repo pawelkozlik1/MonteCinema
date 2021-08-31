@@ -15,7 +15,6 @@ RSpec.describe 'Movie requests', type: :request do
     it 'returns correct number of movies' do
       expect(JSON.parse(response.body).count).to eq(2)
     end
-
   end
 
   describe 'GET /movies/:id' do
