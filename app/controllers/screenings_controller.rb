@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ScreeningsController < ApplicationController
+  before_action :authenticate_user!, except: %i[index show]
+
   def index
     screenings = Screening.all
     render json: screenings
