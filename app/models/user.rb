@@ -6,4 +6,16 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   include DeviseTokenAuth::Concerns::User
   has_many :reservations, dependent: :destroy
+
+  def employee?
+    user.role == 'employee'
+  end
+
+  def manager?
+    user.role == 'manager'
+  end
+
+  def client?
+    user.role == 'client'
+  end
 end
