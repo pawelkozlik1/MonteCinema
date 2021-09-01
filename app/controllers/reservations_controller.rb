@@ -28,7 +28,7 @@ class ReservationsController < ApplicationController
 
   def update
     reservation = Reservation.find(params[:id])
-    authorize reservaiton
+    authorize reservation
     if reservation.update(reservation_params)
       render json: { success: 'Update successful' }
     else
