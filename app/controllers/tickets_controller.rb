@@ -4,12 +4,13 @@ class TicketsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    tickets = Ticket.all
+    tickets = policy_scope(Ticket)
     render json: tickets
   end
 
   def show
     ticket = Ticket.find(params[:id])
+    authorize ticket
     render json: ticket
   end
 
@@ -18,6 +19,7 @@ class TicketsController < ApplicationController
       render json: { error: 'Ticket taken' }
     else
       ticket = Ticket.new(ticket_params)
+      authorize ticket
       if ticket.save
         render json: ticket, status: :created
       else
@@ -31,6 +33,7 @@ class TicketsController < ApplicationController
   # If there is a clearer way to write this feel free to correct me
   def update
     ticket = Ticket.find(params[:id])
+    authorize ticket
     if seat_for_screening_is_taken?
       if ticket.screening_id == ticket_params[:screening_id].to_i && ticket.seat_id == ticket_params[:seat_id].to_i
         if ticket.update(ticket_params)
@@ -46,6 +49,7 @@ class TicketsController < ApplicationController
 
   def delete
     ticket = Ticket.find(params[:id])
+    authorize ticket
     if ticket.destroy
       render json: { success: 'Delete successful' }
     else
@@ -56,7 +60,7 @@ class TicketsController < ApplicationController
   private
 
   def ticket_params
-    params.permit(:ticket_type, :price, :screening_id, :seat_id)
+    params.permit(:ticket_type, :screening_id, :seat_id)
   end
 
   def seat_for_screening_is_taken?
