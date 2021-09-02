@@ -4,16 +4,19 @@ class ScreeningsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
 
   def index
+    authorize Screening
     screenings = Screening.all
     render json: screenings
   end
 
   def show
     screening = Screening.find(params[:id])
+    authorize screening
     render json: screening
   end
 
   def create
+    authorize Screening
     screening = Screening.new(screening_params)
     if screening.save
       render json: screening, status: :created
@@ -24,6 +27,7 @@ class ScreeningsController < ApplicationController
 
   def update
     screening = Screening.find(params[:id])
+    authorize screening
     if screening.update(screening_params)
       render json: { success: 'Update successful' }
     else
@@ -33,6 +37,7 @@ class ScreeningsController < ApplicationController
 
   def delete
     screening = Screening.find(params[:id])
+    authorize screening
     if screening.destroy
       render json: { success: 'Delete successful' }
     else

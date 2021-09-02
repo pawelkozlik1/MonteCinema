@@ -4,16 +4,19 @@ class CinemaHallsController < ApplicationController
   before_action :authenticate_user!
 
   def index
+    authorize CinemaHall
     cinema_halls = CinemaHall.all
     render json: cinema_halls
   end
 
   def show
     cinema_hall = CinemaHall.find(params[:id])
+    authorize cinema_hall
     render json: cinema_hall
   end
 
   def create
+    authorize CinemaHall
     cinema_hall = CinemaHall.new(cinema_hall_params)
     if [20, 50, 100, 200].include? cinema_hall.size
       if cinema_hall.save
@@ -27,6 +30,7 @@ class CinemaHallsController < ApplicationController
 
   def update
     cinema_hall = CinemaHall.find(params[:id])
+    authorize cinema_hall
     if cinema_hall.update(cinema_hall_params)
       if cinema_hall.save
         render json: cinema_hall, status: :created
@@ -39,6 +43,7 @@ class CinemaHallsController < ApplicationController
 
   def delete
     cinema_hall = CinemaHall.find(params[:id])
+    authorize cinema_hall
     if cinema_hall.destroy
       render json: { success: 'Delete successful' }
     else
