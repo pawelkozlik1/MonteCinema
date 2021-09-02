@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class ReservationPolicy < ApplicationPolicy
-  attr_reader :user, :reservation
-
   class Scope < Scope
     def resolve
       if user.manager? || user.employee?

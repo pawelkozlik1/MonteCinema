@@ -1,32 +1,25 @@
 # frozen_string_literal: true
 
 class ScreeningPolicy < ApplicationPolicy
-  attr_reader :user, :screening
-
-  def initialize(user, screening)
-    super(user)
-    @screening = screening
-  end
-
   def create?
-    authorized?
+    manager_or_employee?
   end
 
   def update?
-    authorized?
+    manager_or_employee?
   end
 
   def edit?
-    authorized?
+    manager_or_employee?
   end
 
   def delete?
-    authorized?
+    manager_or_employee?
   end
 
   private
 
-  def authorized?
+  def manager_or_employee?
     user.manager? || user.employee?
   end
 end

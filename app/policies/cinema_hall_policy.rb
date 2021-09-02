@@ -1,36 +1,29 @@
 # frozen_string_literal: true
 
 class CinemaHallPolicy < ApplicationPolicy
-  attr_reader :user, :cinema_hall
-
-  def initialize(user, cinema_hall)
-    super(user)
-    @cinema_hall = cinema_hall
-  end
-
   def index?
-    authorized?
+    manager_or_employee?
   end
 
   def show?
-    authorized?
+    manager_or_employee?
   end
 
   def create?
-    authorized?
+    manager_or_employee?
   end
 
   def edit?
-    authorized?
+    manager_or_employee?
   end
 
   def delete?
-    authorized?
+    manager_or_employee?
   end
 
   private
 
-  def authorized?
+  def manager_or_employee?
     user.manager? || user.employee?
   end
 end

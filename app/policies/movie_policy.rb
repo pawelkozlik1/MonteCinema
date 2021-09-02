@@ -1,32 +1,25 @@
 # frozen_string_literal: true
 
 class MoviePolicy < ApplicationPolicy
-  attr_reader :user, :movie
-
-  def initialize(user, movie)
-    super(user)
-    @movie = movie
-  end
-
   def create?
-    authorized?
+    manager_or_employee?
   end
 
   def update?
-    authorized?
+    manager_or_employee?
   end
 
   def edit?
-    authorized?
+    manager_or_employee?
   end
 
   def delete?
-    authorized?
+    manager_or_employee?
   end
 
   private
 
-  def authorized?
+  def manager_or_employee?
     user.manager? || user.employee?
   end
 end

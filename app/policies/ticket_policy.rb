@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class TicketPolicy < ApplicationPolicy
-  attr_reader :user, :ticket
-
   class Scope < Scope
     def resolve
       if user.manager? || user.employee?
