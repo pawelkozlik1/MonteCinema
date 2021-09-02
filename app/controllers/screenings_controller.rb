@@ -16,8 +16,8 @@ class ScreeningsController < ApplicationController
   end
 
   def create
+    authorize Screening
     screening = Screening.new(screening_params)
-    authorize screening
     if screening.save
       render json: screening, status: :created
     else

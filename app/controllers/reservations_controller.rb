@@ -4,7 +4,7 @@ class ReservationsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    reservations = policy_scope(Reservation).where(screening: params[:screening_id])
+    reservations = policy_scope(Reservation)
     render json: reservations
   end
 
@@ -15,7 +15,7 @@ class ReservationsController < ApplicationController
   end
 
   def create
-    authorize Reservaiton
+    authorize Reservation
     reservation_db = Reservation.joins(:screening)
     reservation = reservation_db.new(reservation_params)
     if reservation.save

@@ -16,8 +16,8 @@ class CinemaHallsController < ApplicationController
   end
 
   def create
+    authorize CinemaHall
     cinema_hall = CinemaHall.new(cinema_hall_params)
-    authorize cinema_hall
     if [20, 50, 100, 200].include? cinema_hall.size
       if cinema_hall.save
         render json: cinema_hall, status: :created
