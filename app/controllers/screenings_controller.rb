@@ -4,14 +4,12 @@ class ScreeningsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
 
   def index
-    authorize Screening
     screenings = Screening.all
     render json: screenings
   end
 
   def show
     screening = Screening.find(params[:id])
-    authorize screening
     render json: screening
   end
 

@@ -19,6 +19,10 @@ class TicketPolicy < ApplicationPolicy
     true
   end
 
+  def create_offline?
+    manager_or_employee?
+  end
+
   def edit?
     owner_or_staff?
   end
@@ -35,5 +39,9 @@ class TicketPolicy < ApplicationPolicy
     else
       user.id = record.user.id
     end
+  end
+
+  def manager_or_employee?
+    user.manager? || user.employee?
   end
 end

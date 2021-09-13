@@ -28,9 +28,20 @@ class TicketsController < ApplicationController
     end
   end
 
-  # I did this so that the seat_for_screening_is_taken doesnt throw error when you try to edit ticket type or price with
-  # existing screening and seat id
-  # If there is a clearer way to write this feel free to correct me
+  def create_offline
+    if seat_for_screening_is_taken?
+      render json: { error: 'Ticket taken' }
+    else
+      ticket = Ticket.new(offline_ticket_params)
+      authorize ticket
+      if ticket.save
+        render json: ticket, status: :created
+      else
+        render json: ticket.errors, status: :bad_request
+      end
+    end
+  end
+
   def update
     ticket = Ticket.find(params[:id])
     authorize ticket
@@ -60,6 +71,10 @@ class TicketsController < ApplicationController
   private
 
   def ticket_params
+    params.require(:reservation_id).permit(:ticket_type, :screening_id, :seat_id)
+  end
+
+  def offline_ticket_params
     params.permit(:ticket_type, :screening_id, :seat_id)
   end
 
